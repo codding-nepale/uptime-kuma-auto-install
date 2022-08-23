@@ -51,6 +51,12 @@ echo -e "\e[1A\e[K\e[1A\e[KGit repository github.com/louislam/uptime-kuma succes
 
 cd /usr/lib/systemd/system/
 wget https://raw.githubusercontent.com/codding-nepale/uptime-kuma/main/config/uptime-kuma.service
+cd /usr/sbin/
+wget https://raw.githubusercontent.com/codding-nepale/uptime-kuma/main/config/uptme-kuma-job.sh
+cd ../..
+systemctl daemon-reload
+systemctl enable uptime-kuma
+systemctl --all | grep uptime-kuma.service
 
 read -p "Do you want to run uptime-kuma now? [Y/N]" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]];
