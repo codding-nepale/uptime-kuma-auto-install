@@ -7,7 +7,10 @@ then
     exit 1
 fi
 echo -e "Running apt update..."
-apt update -y > /dev/null 2> /dev/null
+sudo apt update -y > /dev/null 2> /dev/null
+sudo apt-get -y install ufw
+ufw allow 3001 && ufw allow ssh && ufw enable
+echo -e "y"
 echo -e "\e[1A\e[KRunning apt update... \u2705"
 
 echo -e "Creation of an apt source list file for the current NodeSource Node.js 14.x..."
