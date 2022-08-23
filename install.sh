@@ -44,6 +44,10 @@ npm install npm -g
 echo -e "\e[1A\e[K\e[1A\e[KUpdating of NPM... \u2705"
 
 echo -e "Cloning of git repository github.com/louislam/uptime-kuma"
+DIR="/var/www"
+if [ ! -d "$DIR" ]; then
+  mkdir -p /var/www
+fi
 cd /var/www
 git clone https://github.com/louislam/uptime-kuma.git
 cd uptime-kuma
