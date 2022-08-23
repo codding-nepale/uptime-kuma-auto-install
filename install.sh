@@ -49,10 +49,31 @@ git clone https://github.com/louislam/uptime-kuma.git
 cd uptime-kuma
 echo -e "\e[1A\e[K\e[1A\e[KGit repository github.com/louislam/uptime-kuma successfully cloned... \u2705"
 
+mkdir -p /etc/systemd/system/uptime-kuma
+cd /etc/systemd/system/uptime-kuma
+wget 
 
-IP=$(hostname -I | cut -d ' ' -f 1)
-echo -e "------------------------------------------------------------------------------" >> /etc/motd
-echo -e "Welcome to the uptime-kuma environment via the install bash script by 𝐶𝛳𝐷𝐼𝛱𝐺'𝛱𝛴𝑃𝛥𝐿𝛴. Please use your web browser to 
-configure uptime-kuma - log in at :
-http://$IP:3001/" >> /etc/motd
-echo -e "------------------------------------------------------------------------------" >> /etc/motd
+
+read -p "Do you want to run uptime-kuma now? [Y/N]" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]];
+then
+    echo "Starting uptime-kuma..."
+    cd /var/www/uptime-kuma
+    pm2 start server/server.js --name uptime-kuma
+    echo -e "Uptime-kuma has successfully started."
+    IP=$(hostname -I | cut -d ' ' -f 1)
+    echo -e "------------------------------------------------------------------------------" >> /etc/motd
+    echo -e "Welcome to the uptime-kuma environment via the install bash script by 𝐶𝛳𝐷𝐼𝛱𝐺'𝛱𝛴𝑃𝛥𝐿𝛴. Please use your web browser to 
+    configure uptime-kuma - log in at :
+    http://$IP:3001/" >> /etc/motd
+    echo -e "------------------------------------------------------------------------------" >> /etc/motd
+    echo -e "Uptime-kuma has been successfully installed and started up and will be automatically restarted at the next reboot"
+else
+    echo -e "Uptime-kuma has been successfully installed and will be automatically started on the next reboot"
+    IP=$(hostname -I | cut -d ' ' -f 1)
+    echo -e "------------------------------------------------------------------------------" >> /etc/motd
+    echo -e "Welcome to the uptime-kuma environment via the install bash script by 𝐶𝛳𝐷𝐼𝛱𝐺'𝛱𝛴𝑃𝛥𝐿𝛴. Please use your web browser to 
+    configure uptime-kuma - log in at :
+    http://$IP:3001/" >> /etc/motd
+    echo -e "------------------------------------------------------------------------------" >> /etc/motd
+fi
