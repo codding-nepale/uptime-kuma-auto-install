@@ -49,10 +49,8 @@ git clone https://github.com/louislam/uptime-kuma.git
 cd uptime-kuma
 echo -e "\e[1A\e[K\e[1A\e[KGit repository github.com/louislam/uptime-kuma successfully cloned... \u2705"
 
-mkdir -p /etc/systemd/system/uptime-kuma
-cd /etc/systemd/system/uptime-kuma
-wget 
-
+cd /usr/lib/systemd/system/
+wget https://raw.githubusercontent.com/codding-nepale/uptime-kuma/main/config/uptime-kuma.service
 
 read -p "Do you want to run uptime-kuma now? [Y/N]" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]];
