@@ -54,6 +54,7 @@ fi
 cd /var/www
 git clone https://github.com/louislam/uptime-kuma.git
 cd uptime-kuma
+npm run setup
 echo -e "\e[1A\e[K\e[1A\e[KGit repository github.com/louislam/uptime-kuma successfully cloned... \u2705"
 
 cd /usr/lib/systemd/system/
