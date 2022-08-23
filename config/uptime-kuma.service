@@ -1,5 +1,5 @@
 [Unit]
-Description=A description for your custom service goes here
+Description=uptime-kuma
 After=network.target
 
 [Service]
