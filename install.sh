@@ -1,5 +1,5 @@
 #! /bin/bash
-# Script developped by 𝐶𝛳𝐷𝐼𝛱𝐺'𝛱𝛴𝑃𝛥𝐿𝛴 from Pinous Heberg.com
+# Script developped by 𝐶𝛳𝐷𝐼𝛱𝐺'𝛱𝛴𝑃𝛥𝐿𝛴 from Pinous-Heberg.com
 # Tested on Ubuntu 22.04 + Debian 11
 if [ $(id -u) -ne 0 ]
 then
@@ -8,11 +8,13 @@ then
 fi
 echo -e "Running apt update..."
 sudo apt update -y > /dev/null 2> /dev/null
-sudo apt-get -y install ufw
-ufw allow 3001 && ufw allow ssh && ufw enable
-echo -e "y"
 echo -e "\e[1A\e[KRunning apt update... \u2705"
-
+echo -e "Installing UFW Firewall..."
+sudo apt-get -y install ufw > /dev/null 2> /dev/null
+echo -e "\e[1A\e[K\e[1A\e[KInstalling UFW Firewall... \u2705"
+echo -e "Firewall setup ..."
+ufw allow 3001 && ufw allow ssh && ufw enable
+echo -e "\e[1A\e[K\e[1A\e[KFirewall setup... \u2705"
 echo -e "Creation of an apt source list file for the current NodeSource Node.js 14.x..."
 curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 echo -e "\e[1A\e[KCreation of an apt source list file for the current NodeSource Node.js 14.x repo... \u2705"
@@ -26,7 +28,6 @@ sudo apt -y install gcc g++ make
 curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt -y update && sudo apt -y install yarn
-yarn -V
 YARNVERSION=$(yarn -V)
 echo -e "The latest dependencies for NodeJS and yarn has successfully installed. Version of Yarn: $YARNVERSION"
 
@@ -36,7 +37,7 @@ echo -e "NodeJS and these dependencies have been successfully installed. Version
 
 echo -e "Installing Git..."
 apt-get -y install git
-echo -e "Git has successfully installed. Version of NodeJS: $NODEVERSION"
+echo -e "Git has successfully installed."
 
 echo -e "Installing PM2..."
 npm install pm2 -g && pm2 install pm2-logrotate
@@ -49,28 +50,18 @@ echo -e "\e[1A\e[K\e[1A\e[KUpdating of NPM... \u2705"
 echo -e "Cloning of git repository github.com/louislam/uptime-kuma"
 DIR="/var/www"
 if [ ! -d "$DIR" ]; then
-  mkdir -p /var/www
+  mkdir -p $DIR
 fi
-cd /var/www
+cd $DIR
 git clone https://github.com/louislam/uptime-kuma.git
 cd uptime-kuma
 npm run setup
 echo -e "\e[1A\e[K\e[1A\e[KGit repository github.com/louislam/uptime-kuma successfully cloned... \u2705"
 
-cd /usr/lib/systemd/system/
-wget https://raw.githubusercontent.com/codding-nepale/uptime-kuma/main/config/uptime-kuma.service
-cd /usr/sbin/
-wget https://raw.githubusercontent.com/codding-nepale/uptime-kuma/main/config/uptme-kuma-job.sh
-cd ../..
-systemctl daemon-reload
-systemctl enable uptime-kuma
-systemctl --all | grep uptime-kuma.service
-
-read -p "Do you want to run uptime-kuma now? [Y/N]" -n 1 -r
+read -p "Do you want to run uptime-kuma now? [Y/n]" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]];
 then
     echo "Starting uptime-kuma..."
-    cd /var/www/uptime-kuma
     pm2 start server/server.js --name uptime-kuma
     echo -e "Uptime-kuma has successfully started."
     IP=$(hostname -I | cut -d ' ' -f 1)
