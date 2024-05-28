@@ -9,18 +9,21 @@ fi
 echo -e "Running apt update..."
 sudo apt update -y > /dev/null 2> /dev/null
 echo -e "\e[1A\e[KRunning apt update... \u2705"
-echo -e "Installing UFW Firewall..."
-sudo apt-get -y install ufw > /dev/null 2> /dev/null
-echo -e "\e[1A\e[K\e[1A\e[KInstalling UFW Firewall... \u2705"
-echo -e "Firewall setup ..."
-ufw allow 3001 && ufw allow ssh && ufw enable
-echo -e "\e[1A\e[K\e[1A\e[KFirewall setup... \u2705"
-echo -e "Creation of an apt source list file for the current NodeSource Node.js 14.x..."
-curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
-echo -e "\e[1A\e[KCreation of an apt source list file for the current NodeSource Node.js 14.x repo... \u2705"
+read -p "Do you want to install and configure UFW Firewall? [Y/n]" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]];
+then
+    echo -e "Installing UFW Firewall..."
+    sudo apt-get -y install ufw > /dev/null 2> /dev/null
+    echo -e "\e[1A\e[K\e[1A\e[KInstalling UFW Firewall... \u2705"
+    echo -e "Firewall setup ..."
+    ufw allow 3001 && ufw allow ssh && ufw enable
+    echo -e "\e[1A\e[K\e[1A\e[KFirewall setup... \u2705"
+echo -e "Creation of an apt source list file for the current NodeSource Node.js 8.x..."
+curl -sL https://deb.nodesource.com/setup_18.x | sudo bash -
+echo -e "\e[1A\e[KCreation of an apt source list file for the current NodeSource Node.js 18.x repo... \u2705"
 
 echo -e "Installing NodeJS..."
-sudo apt -y install nodejs
+sudo apt -y install nodejs npm -y
 echo -e "\e[1A\e[K\e[1A\e[KInstalling NodeJS... \u2705"
 
 echo -e "Installation of the latest dependencies for NodeJS and installation of yarn..."
