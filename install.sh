@@ -18,6 +18,7 @@ then
     echo -e "Firewall setup ..."
     ufw allow 3001 && ufw allow ssh && ufw enable
     echo -e "\e[1A\e[K\e[1A\e[KFirewall setup... \u2705"
+fi
 echo -e "Creation of an apt source list file for the current NodeSource Node.js 8.x..."
 curl -sL https://deb.nodesource.com/setup_18.x | sudo bash -
 echo -e "\e[1A\e[KCreation of an apt source list file for the current NodeSource Node.js 18.x repo... \u2705"
